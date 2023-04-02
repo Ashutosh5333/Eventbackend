@@ -6,7 +6,8 @@ const bloguserSchema = mongoose.Schema({
         email: { type: String, required: true, min: 4, unique: true },
         password: { type: String, required: true },
         pic:String,
-        role:{type:String,default:"user"},
+        role:{type:String,default:"bloguser"},
+      
 })
 
  const blogUsermodel = mongoose.model("bloguser", bloguserSchema)

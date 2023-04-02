@@ -4,6 +4,17 @@ const { TaskModel } = require("../models/Task.model")
 
  const taskRouter= express.Router()
 
+  
+ taskRouter.get("/allblog", async (req,res) =>{
+  try{
+   const Task = await TaskModel.find().populate("postedby",["name","email","pic"])
+     res.send(Task)
+  }catch(err){
+    console.log(err)
+    res.send("error in get  data")
+  }
+})
+
 
    taskRouter.get("/task", async (req,res) =>{
         try{
@@ -18,10 +29,11 @@ const { TaskModel } = require("../models/Task.model")
 
      taskRouter.post("/task/create", async (req,res) =>{
          const payload = req.body
+         const userId=req.body.userId
                try{
-                   const Task = new TaskModel(payload)
+                   const Task = new TaskModel({...payload,postedby:userId})
                        await Task.save()
-                       res.send("task added succesfully")
+                       res.send({"msg" :"data created sucessfully"})
                }catch(err){
                   console.log(err)
                   res.send({"err":"Something went wrong"})
@@ -29,8 +41,8 @@ const { TaskModel } = require("../models/Task.model")
      })
 
 
-   
-     taskRouter.patch("/update/:dataId", async(req,res) =>{
+
+     taskRouter.patch("/task/update/:dataId", async(req,res) =>{
    const dataId = req.params.dataId
    const userId=req.body.userId
    const payload = req.body;
@@ -51,7 +63,7 @@ const { TaskModel } = require("../models/Task.model")
 })
     
    
-taskRouter.delete("/dlete/:taskId", async(req,res) =>{
+taskRouter.delete("/task/delete/:taskId", async(req,res) =>{
    const taskId = req.params.taskId
    const userId=req.body.userId
      try{
