@@ -40,7 +40,7 @@ blogUserRouter.post("/login", async(req,res) =>{
    
        bcrypt.compare(password,hashed_password,function(err, result){
            if(result){
-               const token= jwt.sign({userId:user[0]._id}, "hush");
+               const token= jwt.sign({userId:user[0]._id}, process.env.key);
                res.send({"msg":"Login sucessfull", "token":token  })
            }
            else{
