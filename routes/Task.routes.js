@@ -7,7 +7,7 @@ const { TaskModel } = require("../models/Task.model")
   
  taskRouter.get("/allblog", async (req,res) =>{
   try{
-   const Task = await TaskModel.find().populate("postedby",["name","email","pic"])
+   const Task =  await TaskModel.find().populate("postedby",["name","email","pic"])
      res.send(Task)
   }catch(err){
     console.log(err)
