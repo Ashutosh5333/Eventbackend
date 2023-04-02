@@ -11,7 +11,7 @@ const { TaskModel } = require("../models/Task.model")
      res.send(Task)
   }catch(err){
     console.log(err)
-    res.send("error in get  data")
+    // res.send("error in get  data")
   }
 })
 
@@ -31,7 +31,7 @@ const { TaskModel } = require("../models/Task.model")
          const payload = req.body
          const userId=req.body.userId
                try{
-                   const Task = new TaskModel({...payload,postedby:userId})
+                   const Task = await TaskModel.create({...payload,postedby:userId})
                        await Task.save()
                        res.send({"msg" :"data created sucessfully"})
                }catch(err){
