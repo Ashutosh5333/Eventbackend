@@ -19,6 +19,7 @@ const { TaskModel } = require("../models/Task.model")
    taskRouter.get("/task", async (req,res) =>{
         try{
          const Task = await TaskModel.find({userId:req.body.userId})
+              .populate("postedby",["name","email","pic"])
            res.send(Task)
         }catch(err){
           console.log(err)
@@ -31,7 +32,7 @@ const { TaskModel } = require("../models/Task.model")
          const payload = req.body
          const userId=req.body.userId
                try{
-                   const Task = await TaskModel.create({...payload,postedby:userId})
+                   const Task = new TaskModel({...payload,postedby:userId})
                        await Task.save()
                        res.send({"msg" :"data created sucessfully"})
                }catch(err){
@@ -71,7 +72,7 @@ taskRouter.delete("/task/delete/:taskId", async(req,res) =>{
          if(userId!==taskdata.userId){
            res.send("you are not authnticated")
          }else{
-           await TaskModel.findByIdAndDelete({_id:taskId})
+           await TaskModel.findOneAndDelete({_id:taskId})
            res.send({"msg":"Delete data  sucessfully"})
          }
      }catch(err){
