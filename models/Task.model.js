@@ -7,7 +7,7 @@ const taskSchema = mongoose.Schema({
         about:String,
         pic:String,
         userId:String,
-        postedby:{type:mongoose.Types.ObjectId,ref:"bloguser",required:true}
+        postedby:{type:mongoose.Types.ObjectId,ref:"user",required:true}
 })
 
  const TaskModel = mongoose.model("task", taskSchema)

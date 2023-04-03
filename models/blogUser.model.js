@@ -6,11 +6,11 @@ const bloguserSchema = mongoose.Schema({
         email: { type: String, required: true, min: 4, unique: true },
         password: { type: String, required: true },
         pic:String,
-        role:{type:String,default:"bloguser"},
+        role:{type:String,default:"user"},
       
 })
 
- const blogUsermodel = mongoose.model("bloguser", bloguserSchema)
+ const blogUsermodel = mongoose.model("user", bloguserSchema)
 
 
   module.exports={
