@@ -1,5 +1,6 @@
 const express = require("express")
 const { TaskModel } = require("../models/Task.model")
+const { authenticate } = require("../middleware/Authenticate")
 
 
  const taskRouter= express.Router()
@@ -11,7 +12,6 @@ const { TaskModel } = require("../models/Task.model")
      res.send(Task)
   }catch(err){
     console.log(err)
-    // res.send("error in get  data")
   }
 })
 
@@ -24,12 +24,11 @@ taskRouter.get("/allblog/:Id", async (req,res) =>{
      res.send(Task)
   }catch(err){
     console.log(err)
-    // res.send("error in get  data")
   }
 })
 
 
-   taskRouter.get("/task", async (req,res) =>{
+   taskRouter.get("/task", authenticate, async (req,res) =>{
         try{
          const Task = await TaskModel.find({userId:req.body.userId})
               .populate("postedby",["name","email","pic"])
@@ -56,14 +55,14 @@ taskRouter.get("/allblog/:Id", async (req,res) =>{
 
 
 
-     taskRouter.patch("/task/update/:dataId", async(req,res) =>{
+     taskRouter.patch("/task/update/:dataId", authenticate, async(req,res) =>{
    const dataId = req.params.dataId
    const userId=req.body.userId
    const payload = req.body;
      try{
        const taskdata= await TaskModel.findOne({_id:dataId})  
          if(userId!==taskdata.userId){
-           res.send("you are not authnticated")
+           res.send("you are not authenticated")
          }else{
            await TaskModel.findByIdAndUpdate({_id:dataId},payload)
            res.send({"msg":"update data created sucessfully"})
@@ -77,7 +76,7 @@ taskRouter.get("/allblog/:Id", async (req,res) =>{
 })
     
    
-taskRouter.delete("/task/delete/:taskId", async(req,res) =>{
+taskRouter.delete("/task/delete/:taskId", authenticate, async(req,res) =>{
    const taskId = req.params.taskId
    const userId=req.body.userId
      try{

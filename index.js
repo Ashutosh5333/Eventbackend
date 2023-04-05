@@ -22,7 +22,7 @@ app.use(cors({
 
 
  app.use(blogUserRouter)
- app.use(authenticate)
+
  app.use(taskRouter)
 
       
