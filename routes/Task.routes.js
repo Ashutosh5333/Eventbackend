@@ -15,6 +15,19 @@ const { TaskModel } = require("../models/Task.model")
   }
 })
 
+//  ------------------- Single data  ------------------- // 
+
+taskRouter.get("/allblog/:Id", async (req,res) =>{
+    const  Id =  req.params.Id
+  try{
+   const Task =  await TaskModel.findOne({_id:Id}).populate("postedby",["name","email","pic"])
+     res.send(Task)
+  }catch(err){
+    console.log(err)
+    // res.send("error in get  data")
+  }
+})
+
 
    taskRouter.get("/task", async (req,res) =>{
         try{
