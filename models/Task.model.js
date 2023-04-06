@@ -8,6 +8,10 @@ const taskSchema = mongoose.Schema({
         pic:String,
         userId:String,
         postedby:{type:mongoose.Types.ObjectId,ref:"user",required:true}
+}
+,{
+        timestamps:true,
+
 })
 
  const TaskModel = mongoose.model("task", taskSchema)
@@ -15,6 +19,7 @@ const taskSchema = mongoose.Schema({
   module.exports={
      TaskModel
   }
+
 
 
 

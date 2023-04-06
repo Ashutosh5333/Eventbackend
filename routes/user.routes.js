@@ -9,7 +9,7 @@ const blogUserRouter = express.Router()
 
 
 blogUserRouter.post("/signup", async(req,res) => {
- const {email,password,name}= req.body;
+ const {email,password,name,pic}= req.body;
     const userPresent = await blogUsermodel.findOne({email})
       if(userPresent){
         res.send("user is already present")
@@ -17,7 +17,7 @@ blogUserRouter.post("/signup", async(req,res) => {
       }
   try{
     bcrypt.hash(password, 4, async function(err, hash) {
-        const user = new blogUsermodel({email,password:hash,name})
+        const user = new blogUsermodel({email,password:hash,name,pic})
         await user.save()
         res.send("Signup successfully")
     })
@@ -29,8 +29,10 @@ blogUserRouter.post("/signup", async(req,res) => {
 })
 
 
+
+
 blogUserRouter.post("/login", async(req,res) =>{
- const {email,password,name,_id,pic} = req.body;
+ const {email,password,name,pic} = req.body;
  try{
    
   const user = await blogUsermodel.find({email})
