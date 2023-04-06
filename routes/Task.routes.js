@@ -40,7 +40,8 @@ taskRouter.get("/allblog/:Id", async (req,res) =>{
    })
 
 
-     taskRouter.post("/task/create", async (req,res) =>{
+
+     taskRouter.post("/task/create", authenticate, async (req,res) =>{
          const payload = req.body
          const userId=req.body.userId
                try{
