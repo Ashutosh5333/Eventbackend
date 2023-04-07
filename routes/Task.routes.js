@@ -66,11 +66,11 @@ taskRouter.get("/allblog/:Id", async (req,res) =>{
            res.send("you are not authenticated")
          }else{
            await TaskModel.findByIdAndUpdate({_id:dataId},payload)
-           res.send({"msg":"update data created sucessfully"})
+           res.send({"msg":"update data sucessfully"})
          }
      }catch(err){
        console.log(err)
-       res.send({"msg":"item updated successfully"})
+       res.send({"msg":"Something went wrong"})
      }
 
       
